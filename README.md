@@ -31,10 +31,10 @@
 ## 📦 Repository Structure
 ```
 ai-polyglot-studio/
-├── backend/        # FastAPI API with AI, XP, quizzes and dialogues
-├── frontend/       # Web Userinterface
+├── Backend/        # FastAPI API with AI, XP, quizzes and dialogues
+├── Frontend/       # Web Userinterface
 ├── mobile/         # Mobile app in React Native
-├── tests/          # Integrated and unit tests
+├── Tests/          # Integrated and unit tests
 ├── docs/           # MVP Documentation, Release strategy, AI
 ├── .env.example    # Pattern of environmental variables
 ├── docker-compose.yml
