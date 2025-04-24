@@ -1,1 +1,89 @@
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg
+*.egg-info/
+*.log
+.env
+.env.*
+.vscode/
+.idea/
+*.sqlite3
+polyglot.db
+
+# 📦 PIP
+venv/
+ENV/
+env/
+.venv/
+pip-log.txt
+
+# 📂 FastAPI
+instance/
+db.sqlite3
+*.db
+
+# 🧪 Tests
+.coverage
+htmlcov/
+.tox/
+.nox/
+.cache/
+.pytest_cache/
+
+# 📘 Documentation
+docs/_build/
+*.pdf
+
+# 📦 Node.js / React
+node_modules/
+build/
+dist/
+.npm/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+coverage/
+.env.local
+.env.development
+.env.production
+.eslintcache
+
+# 📱 React Native
+ios/Pods/
+android/.gradle/
+android/app/build/
+*.keystore
+
+# 🐳 Docker
+*.pid
+*.tar
+*.bak
+docker-compose.override.yml
+
+# 💻 System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
