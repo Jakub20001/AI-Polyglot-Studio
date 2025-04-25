@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     responseText: {
         fontSize: 16,
         color: '#111827',
-    }
+    },
 
 
 
