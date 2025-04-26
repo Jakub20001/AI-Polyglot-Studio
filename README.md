@@ -38,7 +38,10 @@ ai-polyglot-studio/
 ├── docs/           # MVP Documentation, Release strategy, AI
 ├── .env.example    # Pattern of environmental variables
 ├── docker-compose.yml
-└── README.md       # This file
+├── README.md       # This file
+├── .gitignore
+├── Dockerfile
+├── LICENSE
 ```
 
 
