@@ -1,6 +1,6 @@
 import os
 import openai
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from typing import Dict
 
 load_dotenv()
@@ -43,6 +43,10 @@ def generate_mentor_response(language: str, query: str, level: str = "beginner")
     except openai.error.OpenAIError as e:
         return {"error": f"OpenAI API error: {str(e)}"}
     except Exception as e:
+        return {"error": f"Unexpected error: {str(e)}"}
+    
+    
+
         return {"error": f"Unexpected error: {str(e)}"}
     
     
