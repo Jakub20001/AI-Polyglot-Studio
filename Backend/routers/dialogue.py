@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from backend.schemas import DialogueRequest # type: ignore
-from backend.utils.helpers import get_current_user # type: ignore
-from backend.database import get_db # type: ignore
-from backend.models import User as UserModel # type: ignore
-from backend.ai import dialogue as dialogue_engine # type: ignore
+from schemas import DialogueRequest 
+from utils.helpers import get_current_user 
+from database import get_db 
+from models import User as UserModel 
+from AI import dialogue as dialogue_engine 
 
 router = APIRouter(
     prefix="/dialogue",
@@ -22,4 +22,4 @@ def generate_dialogue(
         generated = dialogue_engine.generate_dialogue(topic=request.topic, level=request.level)
         return {"user": current_user.username, "dialogue": generated}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
