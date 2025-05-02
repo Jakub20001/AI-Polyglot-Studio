@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from backend.schemas import MentorRequest # type: ignore
-from backend.database import get_db # type: ignore
-from backend.utils.helpers import get_current_user # type: ignore
-from backend.ai import mentor as mentor_ai # type: ignore
-from backend.models import User as UserModel # type: ignore
+from schemas import MentorRequest 
+from database import get_db 
+from utils.helpers import get_current_user
+from AI import mentor as mentor_ai 
+from models import User as UserModel 
 
 router = APIRouter(
     prefix="/mentor",
@@ -22,5 +22,5 @@ def ask_mentor(
         response = mentor_ai.get_mentor_response(request.language, request.query)
         return {"response": response}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
     
