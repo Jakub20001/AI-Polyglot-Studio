@@ -1,28 +1,23 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv # type: ignore
+import os 
 
-from backend.database import engine, Base # type: ignore
-from backend.routers import ( # type: ignore
-    auth,
-    users,
-    xp,
-    dialogue,
-    quiz,
-    mentor
-)
-from backend.analytics import logger, metrics # type: ignore
+from database import engine, Base 
+from routers import  auth, users, xp, dialogue, quiz, mentor
+from analytics import logger, metrics 
+
+load_dotenv()
 
 Base.metadata.create_all(bind=engine) 
 
-app = FastAPI(
-    title="AI Polyglot Studio",
-    description="AI language learning platform (quizzes, dialogues, AI mentor, XP system).",
-    version="1.0.0",
-)
+app = FastAPI(title="AI Polyglot Studio")
+
+origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -36,9 +31,20 @@ app.include_router(quiz.router)
 app.include_router(mentor.router)
 
 @app.get("/")
-def read_root():
-    logger.log_event("Root endpoint hit.")
+def root():
     return {"message": "Welcome  to AI Polyglot Studio!"}
+
+@app.get("/health", tags=["system"])
+def health_check():
+    return {"status": "ok"}
+
+@app.on_event("startup")
+def startup_event():
+    print("🚀 App started")
+    
+@app.on_event("shutdown")
+def shutdown_event():
+    print("👋 App shutting down")
 
 @app.get("/metrics")
 def get_metrics():
