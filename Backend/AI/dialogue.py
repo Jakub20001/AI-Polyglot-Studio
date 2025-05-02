@@ -1,6 +1,6 @@
 import os
 import openai
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from typing import Dict
 
 load_dotenv()
@@ -26,7 +26,7 @@ def generate_dialogue(topic: str, level: str = "beginner", language: str = "Engl
         f"Make it engaging, clear, and culturally appropriate.\n"
         f"\nDialogue:\n"
     )
-    
+
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4",
@@ -38,12 +38,10 @@ def generate_dialogue(topic: str, level: str = "beginner", language: str = "Engl
             max_tokens=600,
             n=1,
         )
-        
+
         dialogue = response.choices[0].message.content.strip()
-        
         return {"dialogue": dialogue}
-    
-    except openai.error.OpenAIError as e:
-        return {"error": f"OpenAI API error"}
+    except openai.error.OpenAIError:
+        return {"error": "OpenAI API returned an error."}
     except Exception as e:
         return {"error": f"Unexpected error: {str(e)}"}
