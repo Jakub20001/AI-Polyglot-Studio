@@ -1,6 +1,6 @@
 import os
 import openai
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from typing import List, Dict
 
 load_dotenv()
@@ -28,43 +28,47 @@ def generate_quiz(topic: str, level: str = "beginner", language: str = "English"
         f"Output format:\n"
         f"Q: <question>\nA: <answer>\n"
     )
-    
+
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[
-                {
-                    "role": "system",
-                    "content": f"You are a helpful language tutor who creates short, effective quizzes for {language} learners."
-                },
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=800,
-        )
-        
-        quiz_raw = response.choices[0].message.content.strip()
-        lines = quiz_raw.split("\n")
-        questions = []
-        
-        question = ""
-        answer = ""
-        
-        for line in lines:
-            if line.startswith("Q:"):
-                if question and answer:
-                    questions.append({"question": question, "correct_answer": answer})
-                question = line[2:].strip()
-                answer = ""
-            elif line.startswith("A:"):
-                answer = line[2:].strip()
-                
-        if question and answer:
-            questions.append({"question": question, "correct_answer": answer})
-            
-        return questions
-    
+        return _extracted_from_generate_quiz_25(language, prompt)
     except openai.error.OpenAIError as e:
         return [{"error": f"OpenAI API error: {str(e)}"}]
     except Exception as e:
         return [{"error": f"Unexpected error: {str(e)}"}]
+
+
+# TODO Rename this here and in `generate_quiz`
+def _extracted_from_generate_quiz_25(language, prompt):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {
+                "role": "system",
+                "content": f"You are a helpful language tutor who creates short, effective quizzes for {language} learners."
+            },
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.7,
+        max_tokens=800,
+    )
+
+    quiz_raw = response.choices[0].message.content.strip()
+    lines = quiz_raw.split("\n")
+    questions = []
+
+    question = ""
+    answer = ""
+
+    for line in lines:
+        if line.startswith("Q:"):
+            if question and answer:
+                questions.append({"question": question, "correct_answer": answer})
+            question = line[2:].strip()
+            answer = ""
+        elif line.startswith("A:"):
+            answer = line[2:].strip()
+
+    if question and answer:
+        questions.append({"question": question, "correct_answer": answer})
+
+    return questions
