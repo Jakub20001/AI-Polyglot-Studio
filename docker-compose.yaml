@@ -28,7 +28,7 @@ services:
 
   
   db:
-    image: postgres:13
+    image: postgres:17
     container_name: polyglot-db
     restart: always
     environment:
